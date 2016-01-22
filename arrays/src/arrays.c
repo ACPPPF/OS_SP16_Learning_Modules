@@ -15,10 +15,16 @@ bool array_copy(const void *src, void *dst, const size_t elem_size, const size_t
 }
 
 bool array_is_equal(const void *data_one, void *data_two, const size_t elem_size, const size_t elem_count) {
-
-	return false;
+	if(!data_one || !data_two || elem_size < 0 || elem_count < 0) {	
+		return false;
+	}
+	if(memcmp(data_one, data_two, elem_size * elem_count)) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
-
 ssize_t array_locate(const void *data, const void *target, const size_t elem_size, const size_t elem_count) { 
 
 	return 0;
