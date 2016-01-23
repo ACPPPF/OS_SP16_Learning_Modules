@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 
 #include "../include/arrays.h"
 
@@ -46,16 +47,54 @@ ssize_t array_locate(const void *data, const void *target, const size_t elem_siz
 	return -1;
 }
 
+// Writes an array into a binary file
+// \param src_data the array the will be wrote into the destination file
+// \param dst_file the file that will contain the wrote src_data
+// \param elem_size the number of bytes each array element uses
+// \param elem_count the number of elements in the source array 
+// return true if operation was successful, else false
 bool array_serialize(const void *src_data, const char *dst_file, const size_t elem_size, const size_t elem_count) {
-	if(!src_data || !dst_file || elem_size == 0 || elem_count == 0) {
+	if(!src_data || !dst_file || strlen(dst_file) == 0 || elem_size == 0 || elem_count == 0) {
 		return false;
 	}
-	return true;
+	const char *ptr = dst_file; //Creates a pointer to the file name
+	while (*ptr != '\0') { //Parsing through until the null terminator
+    		if (isspace(*ptr)) { //Checks for any spaces, end lines, etc.
+      			return false;
+		}
+    		ptr++; //Move down the pointer
+  	}
+	FILE *fp;
+	fp = fopen(dst_file, "w");
+	if(fwrite(src_data, elem_size *sizeof(char), elem_count, fp)) {
+		fclose(fp);
+		return true;
+	}
+	else {
+		fclose(fp);
+		return false;
+	}
 }
 
 bool array_deserialize(const char *src_file, void *dst_data, const size_t elem_size, const size_t elem_count) {
-	if(!src_file || !dst_data || elem_size == 0 || elem_count == 0) {
+	if(!src_file || !dst_data || strlen(src_file) == 0 || elem_size == 0 || elem_count == 0) {
                 return false;
         }
-	return true;
+        const char *ptr = src_file; //Creates a pointer to the file name
+        while (*ptr != '\0') { //Parsing through until the null terminator
+                if (isspace(*ptr)) { //Checks for any spaces, end lines, etc.
+                        return false;
+                }
+                ptr++; //Move down the pointer
+        }
+        FILE *fp;
+        fp = fopen(src_file, "r");
+        if(fread(dst_data, elem_size *sizeof(char), elem_count, fp)) {
+                fclose(fp);
+                return true;
+        }
+        else {
+                fclose(fp);
+                return false;
+        }
 }
