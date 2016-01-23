@@ -59,9 +59,18 @@ int string_length(const char *str, const size_t length) {
 	return 0;
 }
 
+// Split the incoming string to tokens that are stored in a passed allocated tokens string array
+// \param str the string that will be used for tokenization
+// \param delims the delimiters that will be used for splitting the str into segments
+// \param str_length the lengt of the str
+// \param tokens the string array that is pre-allocated and will contain the parsed tokens
+// \param max_token_length the max length of a token string in the tokens string array with null terminator
+// \param requested_tokens the number of possible strings that tokens string array can contain
+// \return returns the number of actual parsed tokens, 0 for incorrect params, and -1 for incorrect token allocation
 int string_tokenize(const char *str, const char *delims, const size_t str_length,char **tokens, const size_t max_token_length, const size_t requested_tokens) {
-
-	return 0;
+	if(!str || !delims || str_length == 0 || !tokens || max_token_length == 0 || requested_tokens == 0) {
+		return 0;
+	}
 }
 
 bool string_to_int(const char *str, int *converted_value) {

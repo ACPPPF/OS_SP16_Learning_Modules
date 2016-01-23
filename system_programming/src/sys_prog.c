@@ -80,5 +80,14 @@ bool endianess_converter(uint32_t *src_data, uint32_t *dst_data, const size_t sr
 	if(!src_data || !dst_data || src_count == 0) {
 		return false;
 	}
+	int counter;
+	for(counter = 0; counter < src_count; counter++) {
+		*dst_data = ((*src_data>>24)&0xff) | // move byte 3 to byte 0
+                    ((*src_data<<8)&0xff0000) | // move byte 1 to byte 2
+                    ((*src_data>>8)&0xff00) | // move byte 2 to byte 1
+                    ((*src_data<<24)&0xff000000); // byte 0 to byte 3
+		dst_data++;
+		src_data++;
+	}
 	return true;
 }
