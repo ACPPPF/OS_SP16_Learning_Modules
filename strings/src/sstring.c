@@ -41,26 +41,20 @@ bool string_equal(const char *str_a, const char *str_b, const size_t length) {
 	}
 }
 
-
 // Finds the number of characters in the string, not including the null terminator
 // \param str the string to count the number of characters in the string
 // \param length the max possible string length for the application
 // \return the length of the string or 0 for invalid string 
 int string_length(const char *str, const size_t length) {
 	if(!str || length == 0) {
-		return 0;
-	}
-	if(str[0] == '\0') {
-		return 0;
+		return -1;
 	}
 	const char *ptr = str;
-	int counter = 0;
-	while(ptr[0] != '\0' || counter < length - 1) {
-		ptr++;
-		counter++;
-	}
-	if(ptr[0] == '\0') {
-		return counter;
+	int counter;
+	for(counter = 0; counter < length; counter++, ptr++) {	
+		if(ptr[0] == '\0') {
+			return counter;
+		}
 	}
 	return 0;
 }
