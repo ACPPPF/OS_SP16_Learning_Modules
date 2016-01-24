@@ -12,13 +12,31 @@
 // GOOGLE FOR ENDIANESS HELP
 
 bool bulk_read(const char *input_filename, void *dst, const size_t offset, const size_t dst_size) {	
-
-	return false;
+	if(!input_filename || !dst || dst_size == 0) {
+		return false;
+	}
+	int file_desc = open(input_filename, O_RDONLY);
+	if(lseek(file_desc, offset, 0) >= 0) {
+		read(file_desc, dst, dst_size * sizeof(char));
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool bulk_write(const void *src, const char *output_filename, const size_t offset, const size_t src_size) {
-
-	return false;
+	if(!src || !output_filename || src_size == 0) {
+		return false;
+	}
+	int file_desc = open(output_filename, O_WRONLY);
+	if(lseek(file_desc, offset, 0) >= 0) {
+                write(file_desc, src, src_size * sizeof(char));
+                return true;
+        }
+        else {
+                return false;
+        }
 }
 
 

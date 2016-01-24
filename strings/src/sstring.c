@@ -11,12 +11,17 @@ bool string_valid(const char *str, const size_t length) {
 	}
 	return true;
 }
-
+/**
+* Checks if the passed string is null and the length is 
+* greater than 0 then returns a duplicate of the string
+* param str: string to be duplicated
+* param length: length of the string
+*/
 char *string_duplicate(const char *str, const size_t length) {
 	if(!str || length == 0) {
-		return NULL;
+		return NULL; //String is null or length is zero
 	}
-	return strndup(str, sizeof(char) * length);
+	return strndup(str, sizeof(char) * length); //Duplicates string using strndup
 }
 
 bool string_equal(const char *str_a, const char *str_b, const size_t length) {	
