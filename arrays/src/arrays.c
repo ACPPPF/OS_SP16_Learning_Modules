@@ -37,10 +37,11 @@ ssize_t array_locate(const void *data, const void *target, const size_t elem_siz
 	}
 	int index = 0;
 	while(index * elem_size < elem_size * elem_count) { 
-		if(memcmp(data, target, elem_size * (index + 1)) == 0) {
+		if(memcmp(data, target, elem_size) == 0) {
 			return index;
 		}
 	index++;
+	data = (char*)data + elem_size; 
 	}
 	return -1;
 }
@@ -56,5 +57,7 @@ bool array_deserialize(const char *src_file, void *dst_data, const size_t elem_s
 	if(!src_file || !dst_data || elem_size == 0 || elem_count == 0) {
                 return false;
         }
+	FILE *binFile;
+	fread(
 	return true;
 }
