@@ -5,7 +5,6 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <byteswap.h>
 
 #include "../include/sys_prog.h"
 
@@ -73,6 +72,5 @@ bool endianess_converter(uint32_t *src_data, uint32_t *dst_data, const size_t sr
 	if(!src_data || !dst_data || src_count == 0) {
 		return false;
 	}
-	*dst_data = __bswap_32(*src_data);
 	return true;
 }

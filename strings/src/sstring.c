@@ -5,11 +5,19 @@
 
 #include "../include/sstring.h"
 
+
+// Verifies if the passed character array is a null terminated or not.
+// \param str the character array that may be null terminated
+// \param length to prevent buffer overflow while checking the 
+// \return true if the character array is a string
 bool string_valid(const char *str, const size_t length) {
 	if(!str || length == 0) {
 		return false;
 	}
-	return true;
+	if(str[length - 1] == '\0') {
+		return true;
+	}
+	return false;
 }
 /**
 * Checks if the passed string is null and the length is 
@@ -33,9 +41,28 @@ bool string_equal(const char *str_a, const char *str_b, const size_t length) {
 	}
 }
 
+
+// Finds the number of characters in the string, not including the null terminator
+// \param str the string to count the number of characters in the string
+// \param length the max possible string length for the application
+// \return the length of the string or 0 for invalid string 
 int string_length(const char *str, const size_t length) {
-	printf("%d\n", length);
-	return true;	
+	if(!str || length == 0) {
+		return 0;
+	}
+	if(str[0] == '\0') {
+		return 0;
+	}
+	const char *ptr = str;
+	int counter = 0;
+	while(ptr[0] != '\0' || counter < length - 1) {
+		ptr++;
+		counter++;
+	}
+	if(ptr[0] == '\0') {
+		return counter;
+	}
+	return 0;
 }
 
 int string_tokenize(const char *str, const char *delims, const size_t str_length,char **tokens, const size_t max_token_length, const size_t requested_tokens) {
