@@ -7,8 +7,13 @@ struct bitmap {
 };
 
 bitmap_t *bitmap_create(size_t n_bits) {
-
-	return NULL;
+	if(n_bits == 0) {
+		return NULL;
+	}
+	struct bitmap map;
+	map.bit_count = n_bits;
+	map.data = malloc(sizeof(char) * n_bits);	
+	return &map;
 }
 
 bool bitmap_set(bitmap_t *const bitmap, const size_t bit) {
