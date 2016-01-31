@@ -3,7 +3,7 @@
 
 int compare_structs(sample_t* a, sample_t* b)
 {
-	return 0;
+
 }
 
 void print_alignments()
