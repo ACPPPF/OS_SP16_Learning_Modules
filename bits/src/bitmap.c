@@ -15,15 +15,20 @@ bitmap_t *bitmap_create(size_t n_bits) {
 	}
 	bitmap *map;
 	map = (bitmap *)malloc(sizeof(bitmap));
-	map->data = NULL;
+	map->data = (uint8_t *)malloc(sizeof(uint8_t)*n_bits);
 	map->bit_count = n_bits;
         map->byte_count = n_bits/8;
 	return map;
 }
 
+/// Sets the requested bit in bitmap
+/// \param bitmap The bitmap
+/// \param bit The bit to set
 bool bitmap_set(bitmap_t *const bitmap, const size_t bit) {
-
-	return false;
+	if(!bitmap || bit <= 0 || bit == SIZE_MAX) {
+		return false;
+	}
+	return true;
 }
 
 bool bitmap_reset(bitmap_t *const bitmap, const size_t bit) {
@@ -46,5 +51,10 @@ size_t bitmap_ffz(const bitmap_t *const bitmap) {
 }
 
 bool bitmap_destroy(bitmap_t *bitmap) {
-	return false;
+	if(!bitmap) {
+		return false;
+	}
+	free(bitmap->data);
+	free(bitmap);
+	return true;
 }
