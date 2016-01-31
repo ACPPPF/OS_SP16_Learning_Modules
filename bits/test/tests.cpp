@@ -21,7 +21,11 @@
 
  TEST(bitmap_create, GoodCreateA) {
  	bitmap_t *bitmap_A;
+<<<<<<< HEAD
  	size_t test_bit_count = 64;
+=======
+ 	size_t test_bit_count = 58;
+>>>>>>> 0b8746357ff1e47e01dc22434fc83130d02abae2
  	bitmap_A = bitmap_create(test_bit_count);
 	ASSERT_NE(bitmap_A,(bitmap_t*)NULL);
  	ASSERT_EQ(test_bit_count/8, bitmap_A->byte_count);
