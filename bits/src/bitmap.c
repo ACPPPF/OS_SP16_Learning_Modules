@@ -6,14 +6,19 @@ struct bitmap {
 	size_t bit_count, byte_count;
 };
 
+/// Creates a bitmap to contain 'n' bits (zero initialized)
+/// \param n_bits
+/// \return New bitmap pointer, NULL on error
 bitmap_t *bitmap_create(size_t n_bits) {
-	if(n_bits == 0) {
+	if(n_bits <= 0 || n_bits == SIZE_MAX) {
 		return NULL;
 	}
-	struct bitmap map;
-	map.bit_count = n_bits;
-	map.data = malloc(sizeof(char) * n_bits);	
-	return &map;
+	bitmap *map;
+	map = (bitmap *)malloc(sizeof(bitmap));
+	map->data = NULL;
+	map->bit_count = n_bits;
+        map->byte_count = n_bits/8;
+	return map;
 }
 
 bool bitmap_set(bitmap_t *const bitmap, const size_t bit) {
