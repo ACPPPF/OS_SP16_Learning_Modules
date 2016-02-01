@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <math.h>
 #include "../src/bitmap.c"
 #include "gtest/gtest.h"
 
@@ -29,13 +30,15 @@
 	  bitmap_destroy(bitmap_A);
 	}
  }
-
+ // Handling the issue that you must create enough bytes for requested bits.
+ // You may have to add more bits to allow for a bitmap size that is not
+ // nicely divisable by 8 bits
  TEST(bitmap_create, GoodCreateB) {
  	bitmap_t *bitmap_A;
  	size_t test_bit_count = 371;
  	bitmap_A = bitmap_create(test_bit_count);
 	ASSERT_NE(bitmap_A,(bitmap_t*)NULL);
- 	ASSERT_EQ(test_bit_count/8, bitmap_A->byte_count);
+ 	ASSERT_EQ(ceil(test_bit_count/8.0), bitmap_A->byte_count);
  	if (bitmap_A) {
 	  bitmap_destroy(bitmap_A);
 	}
@@ -95,7 +98,7 @@ TEST(bitmap_set, GoodSetA) {
 	ASSERT_NE(bitmap_A,(bitmap_t*)NULL);
 	EXPECT_EQ(true, bitmap_set(bitmap_A, 0));
 	EXPECT_EQ(true, bitmap_set(bitmap_A, test_bit_count - 1));
-	ASSERT_EQ(0x02, bitmap_A->data[test_byte_count -1]);
+	ASSERT_EQ(0x03, bitmap_A->data[test_byte_count -1]);
 	ASSERT_EQ(0x01, bitmap_A->data[0]);
 	if (bitmap_A)
           bitmap_destroy(bitmap_A);	
