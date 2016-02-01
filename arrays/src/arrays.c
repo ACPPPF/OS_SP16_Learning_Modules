@@ -26,12 +26,7 @@ bool array_is_equal(const void *data_one, void *data_two, const size_t elem_size
 		return false;
 	}
 }
-// Attempts to locate the target from an array
-// \param data the data that may contain the target
-// \param target the target that may be in the data
-// \param elem_size the number of bytes each array element uses and same as the target
-// \param elem_count the number of elements in the data array
-// returns an index to the located target, else return -1 for failure
+
 ssize_t array_locate(const void *data, const void *target, const size_t elem_size, const size_t elem_count) { 
 	if(!data || !target || elem_size == 0 || elem_count == 0) {
 		return -1;
@@ -47,12 +42,6 @@ ssize_t array_locate(const void *data, const void *target, const size_t elem_siz
 	return -1;
 }
 
-// Writes an array into a binary file
-// \param src_data the array the will be wrote into the destination file
-// \param dst_file the file that will contain the wrote src_data
-// \param elem_size the number of bytes each array element uses
-// \param elem_count the number of elements in the source array 
-// return true if operation was successful, else false
 bool array_serialize(const void *src_data, const char *dst_file, const size_t elem_size, const size_t elem_count) {
 	if(!src_data || !dst_file || strlen(dst_file) == 0 || elem_size == 0 || elem_count == 0) {
 		return false;
