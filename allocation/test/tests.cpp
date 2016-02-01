@@ -15,67 +15,6 @@ int main(int argc, char** argv)
 }
 
 TEST(calloc_memory, ZeroBytes) { 
-<<<<<<< HEAD
-	void* allocated = allocate_array(sizeof(char), 0,1);
-	ASSERT_NE((void*)NULL, allocated);
-	free(allocated);
-}
-TEST(calloc_memory, NegativeBytes) { 
-	void* allocated = allocate_array(sizeof(char),-1,1);
-	ASSERT_EQ((void*)NULL, allocated);
-	free(allocated);
-}
-TEST(calloc_memory, PositiveBytes) { 
-	void* allocated = allocate_array(sizeof(char), BUFSIZ,1);
-	ASSERT_NE((void*)NULL, allocated);
-	free(allocated);
-}
-TEST(malloc_memory, ZeroBytes) { 
-	void* allocated = allocate_array(sizeof(char), 0,0);
-	ASSERT_NE((void*)NULL, allocated);
-	free(allocated);
-}
-TEST(malloc_memory, NegativeBytes) { 
-	void* allocated = allocate_array(sizeof(char), -1,0);
-	ASSERT_EQ((void*)NULL, allocated);
-	free(allocated);
-}
-TEST(malloc_memory, PositiveBytes) { 
-	void* allocated = allocate_array(sizeof(char), BUFSIZ,0);
-	ASSERT_NE((void*)NULL, allocated);
-	free(allocated);
-}
-TEST(reallocate, ZeroBytes) { 
-	void* allocated = allocate_array(sizeof(char), BUFSIZ,1);
-	ASSERT_NE((void*)NULL, allocated);
-	void* reallocated = reallocate_array(allocated,0);
-	EXPECT_EQ((void*)NULL,reallocated);
-	free(reallocated);
-}
-TEST(reallocate, NegativeBytes) { 
-	void* allocated = allocate_array(sizeof(char), BUFSIZ,1);
-	ASSERT_NE((void*)NULL, allocated);
-	void* reallocated = reallocate_array(allocated,-1);
-	EXPECT_EQ((void*)NULL,reallocated);
-	free(reallocated);
-}
-TEST(reallocate, PositiveBytes) { 
-	void* allocated = allocate_array(sizeof(char), BUFSIZ,1);
-	ASSERT_NE((void*)NULL, allocated);
-	void* reallocated = reallocate_array(allocated,BUFSIZ*2);
-	EXPECT_NE((void*)NULL,reallocated);
-}
-
-TEST(deallocate, ValidPointer) { 
-	void* allocated = allocate_array(sizeof(char), BUFSIZ,1);
-	deallocate_array(&allocated);
-	EXPECT_EQ((void*)NULL,(void*)allocated);
-}
-TEST(deallocate, NullPointer) { 
-	void* allocated = NULL;
-	deallocate_array(&allocated);
-	EXPECT_EQ((void*)NULL,(void*)allocated);
-=======
 	char* allocated = (char*) allocate_array(sizeof(char), 0,1);
 	ASSERT_EQ((char*)NULL, allocated);	
 }
@@ -132,7 +71,6 @@ TEST(deallocate, NullPointer) {
 	char* allocated = NULL;
 	deallocate_array((void**)&allocated);
 	EXPECT_EQ((char*)NULL,(char*)allocated);
->>>>>>> 7c5715c1507b617c9a9ed11c5f2e3a9293dcdf35
 }
 TEST(readline_to_buffer,ValidFile){
 	
