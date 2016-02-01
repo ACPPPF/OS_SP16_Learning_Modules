@@ -17,38 +17,25 @@ int create_blank_records(Record_t **records, const size_t num_records) {
 		return -2;
 	}
 	memset(*records,0,sizeof(Record_t) * num_records);
-	return 0;
+	return 0;	
 }
 
 int read_records(const char *input_filename, Record_t *records, const size_t num_records) {
 	if(!input_filename || !records || num_records == 0) {
 		return -1;
 	}
+
 	int fd = open(input_filename, O_RDONLY);
 	if(fd == -1) {
-		close(fd);
 		return -2;
-  	}
-	ssize_t data_read = 0;
-  	for (size_t i = 0; i < num_records; ++i) {
-
-		*records = (Record_t*) malloc(sizeof(Record_t) * num_records);
-	
-		memset(*records,0,sizeof(Record_t) * num_records);
-		return 0;	
 	}
-}
-
-int read_records(const char *input_filename, Record_t *records, const size_t num_records) {
-	if(!input_filename || !records || num_records == 0) {
-		return -1;
-	}
-
-	int fd = open(input_filename, O_RDONLY);	
-
-	ssize_t data_read = 0;
-  	for (size_t i = 0; i < num_records; ++i) {
+  	ssize_t data_read = 0;
+	size_t i;
+	for (i = 0; i < num_records; ++i) {
 		data_read = read(fd,&records[i], sizeof(Record_t));	
+	}
+	if(i != num_records) {
+		return -3;
 	}
 	return 0;
 }
