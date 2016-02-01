@@ -1,4 +1,4 @@
-include <stdio.h>
+#include <stdio.h>
 #include <stdint.h>
 #include "../src/bitmap.c"
 #include "gtest/gtest.h"
