@@ -1,19 +1,10 @@
 #include "../include/bitmap.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 7c5715c1507b617c9a9ed11c5f2e3a9293dcdf35
 // data is an array of uint8_t and needs to be allocated in bitmap_create
 //      and used in the remaining bitmap functions. You will use data for any bit operations and bit logic   
 // bit_count the number of requested bits, set in bitmap_create from n_bits
 // byte_count the total number of bytes the data contains, set in bitmap_create 
-<<<<<<< HEAD
-=======
 
->>>>>>> 0b8746357ff1e47e01dc22434fc83130d02abae2
-=======
->>>>>>> 7c5715c1507b617c9a9ed11c5f2e3a9293dcdf35
 struct bitmap {
 	uint8_t *data;
 	size_t bit_count, byte_count;
