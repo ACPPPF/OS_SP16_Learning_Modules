@@ -37,7 +37,9 @@ int read_records(const char *input_filename, Record_t *records, const size_t num
 }
 
 int create_record(Record_t **new_record, const char* name, int age) {
-
+	if(!new_record || (*new_record) || !name || name[0] == '\0' || name[0] == '\n' || strlen(name) > MAX_NAME_LEN || age <= 0 || age > 200) {
+		return -1;
+	}
 	*new_record = (Record_t*) malloc(sizeof(Record_t));
 	
 	memcpy((*new_record)->name,name,sizeof(char) * strlen(name));
