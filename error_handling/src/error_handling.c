@@ -24,6 +24,7 @@ int read_records(const char *input_filename, Record_t *records, const size_t num
 	if(!input_filename || !records || num_records == 0) {
 		return -1;
 	}
+<<<<<<< HEAD
 	int fd = open(input_filename, O_RDONLY);
 	if(fd == -1) {
 		close(fd);
@@ -41,7 +42,20 @@ int read_records(const char *input_filename, Record_t *records, const size_t num
 	int fd = open(input_filename, O_RDONLY);
 	ssize_t data_read = 0;
 	for (size_t i = 0; i < num_records; ++i) {
+=======
+
+	int fd = open(input_filename, O_RDONLY);
+	if(fd == -1) {
+		return -2;
+	}
+  	ssize_t data_read = 0;
+	size_t i;
+	for (i = 0; i < num_records; ++i) {
+>>>>>>> 8d2e7ef0126274119a9033963a965867b5689514
 		data_read = read(fd,&records[i], sizeof(Record_t));	
+	}
+	if(i != num_records) {
+		return -3;
 	}
 	return 0;
 }
