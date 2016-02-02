@@ -1,12 +1,9 @@
 #include "../include/allocation.h"
 
-<<<<<<< HEAD
 void* allocate_array(size_t member_size, size_t nmember,bool clear)
 {
-=======
 void* allocate_array(size_t member_size, size_t nmember,bool clear) {
 	printf("Number of members is %d\n", nmember);
->>>>>>> 8d2e7ef0126274119a9033963a965867b5689514
 	if(member_size == 0 || nmember == 0) {
 		return NULL;
 	}
@@ -15,12 +12,9 @@ void* allocate_array(size_t member_size, size_t nmember,bool clear) {
 		array = calloc(nmember, member_size);
 	} else if(clear == 0) {
 		array = malloc(nmember * member_size);
-<<<<<<< HEAD
-=======
 		if(array == NULL) {
 			return NULL;
 		}
->>>>>>> 8d2e7ef0126274119a9033963a965867b5689514
 	}
 	return array;
 }

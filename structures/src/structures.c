@@ -3,11 +3,7 @@
 
 int compare_structs(sample_t* a, sample_t* b)
 {
-<<<<<<< HEAD
-
-=======
 	return 0;
->>>>>>> 7c5715c1507b617c9a9ed11c5f2e3a9293dcdf35
 }
 
 void print_alignments()
