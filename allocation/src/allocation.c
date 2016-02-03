@@ -1,9 +1,6 @@
 #include "../include/allocation.h"
 
-void* allocate_array(size_t member_size, size_t nmember,bool clear)
-{
 void* allocate_array(size_t member_size, size_t nmember,bool clear) {
-	printf("Number of members is %d\n", nmember);
 	if(member_size == 0 || nmember == 0) {
 		return NULL;
 	}
@@ -44,15 +41,17 @@ void deallocate_array(void** ptr) {
 	if(!ptr) {
 		return;
 	}
+	void** temp = ptr;
 	int counter = 0;
-	while(ptr + 1) {
-		if(ptr[counter]) {
-			printf("x %s\n", ptr[counter]);
-		}
-		ptr++;
+	while(temp[counter + 1]) {
 		counter++;
 	}
-	free(ptr);
+	for(int index = 0; index < counter; ++index) {
+		if(ptr[index] != NULL) {
+			free(ptr[index]);
+			ptr[index] = NULL;
+		}
+	}
 }
 
 char* read_line_to_buffer(char* filename) {

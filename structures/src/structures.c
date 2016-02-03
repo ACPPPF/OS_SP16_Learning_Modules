@@ -3,7 +3,15 @@
 
 int compare_structs(sample_t* a, sample_t* b)
 {
-	return 0;
+	if(!a || !b) {
+		return 0;
+	}
+	if(a->a == b->a && a->b == b->b && a->c == b->c) {
+		return 1;
+	}
+	else {
+		return 0;
+	}	
 }
 
 void print_alignments()
@@ -24,11 +32,17 @@ int sort_fruit(const fruit_t* a,int* apples,int* oranges, const size_t size)
 
 int initialize_array(fruit_t* a, int apples, int oranges)
 {
-	return 0;
+	if(!a) {
+		return 0;
+	}
 }
 
 int initialize_orange(orange_t* a)
-{	
+{
+	if(!a) {
+		return -1;
+	}
+	a = {.type = IS_ORANGE, .weight = ORANGE,
 	return 0;
 
 }

@@ -49,9 +49,9 @@ typedef struct good
 // Assuming Structs have an alignment of 4 there will be three byte of padding at the end of the following struct (to make the size an even number).
 typedef struct sample
 {
-	long long a;
-	long long b;
-	char c;
+	long long a;	//0
+	long long b;	//8
+	char c;		//9
 }sample_t;
 
 // Padding can be useful, e.g. to obtain some degree of polymorphism while using different data sets.
