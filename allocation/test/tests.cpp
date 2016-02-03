@@ -60,7 +60,6 @@ TEST(reallocate, PositiveBytes) {
 	char* reallocated = (char*)reallocate_array(allocated,BUFSIZ*2);
 	EXPECT_NE((char*)NULL,reallocated);
 	free(reallocated);
-	free(allocated);
 }
 
 TEST(deallocate, ValidPointer) { 
