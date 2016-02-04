@@ -21,6 +21,7 @@ TEST(calloc_memory, ZeroBytes) {
 TEST(calloc_memory, NegativeBytes) { 
 	char* allocated = (char*) allocate_array(sizeof(char),-1,1);
 	ASSERT_EQ((char*)NULL, allocated);
+	free(allocated);
 }
 TEST(calloc_memory, PositiveBytes) { 
 	char* allocated = (char*)allocate_array(sizeof(char), BUFSIZ,1);
@@ -45,14 +46,14 @@ TEST(reallocate, ZeroBytes) {
 	ASSERT_NE((char*)NULL, allocated);
 	char* reallocated = (char*) reallocate_array(allocated,0);
 	EXPECT_EQ((char*)NULL,reallocated);
-	free(reallocated);
+	free(allocated);
 }
 TEST(reallocate, NegativeBytes) { 
 	char* allocated = (char*) allocate_array(sizeof(char), BUFSIZ,1);
 	ASSERT_NE((char*)NULL, allocated);
 	char* reallocated = (char*)reallocate_array(allocated,-1);
 	EXPECT_EQ((char*)NULL,reallocated);
-	free(reallocated);
+	free(allocated);
 }
 TEST(reallocate, PositiveBytes) { 
 	char* allocated = (char*) allocate_array(sizeof(char), BUFSIZ,1);

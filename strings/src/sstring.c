@@ -71,18 +71,21 @@ int string_tokenize(const char *str, const char *delims, const size_t str_length
 	if(!str || !delims || str_length == 0 || !tokens || max_token_length == 0 || requested_tokens == 0) {
 		return 0;
 	}
+	return 1;
 }
 
 bool string_to_int(const char *str, int *converted_value) {
+	errno = 0;
 	if(!str || !converted_value || sizeof(str) >= 10) {
 		return false;
 	}
-	unsigned long long test = atol(str);
-	if(test/(UINT16_MAX+1) > 0) {
+	char* end;
+	*converted_value = strtol(str, &end, 10);
+	if(errno == ERANGE) {
+		*converted_value = 0;
 		return false;
 	}
 	else {
-		*converted_value = atoi(str);
 		return true;
 	}
 }

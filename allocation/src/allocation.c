@@ -5,20 +5,14 @@ void* allocate_array(size_t member_size, size_t nmember,bool clear) {
 	if((signed int)member_size <= 0 || (signed int)nmember <= 0) {
 		return NULL;
 	}
-	if((short)member_size < 0 || (short)nmember < 0) {
-		return NULL;
-	}
 	void* array = NULL;
-	if(clear == 1) {
+	if(clear == true) {
 		array = calloc(nmember, member_size);
-		if(array == NULL) {
-			return NULL;
-		}
-	} else if(clear == 0) {
+	} else if(clear == false) {
 		array = malloc(nmember * member_size);
-		if(array == NULL) {
-			return NULL;
-		}
+	}
+	if(array == NULL) {
+		return NULL;
 	}
 	return array;
 }
@@ -26,15 +20,8 @@ void* allocate_array(size_t member_size, size_t nmember,bool clear) {
 void* reallocate_array(void* ptr, size_t size) {
 	if((signed int)size <= 0) {
 		return NULL;
-	} else if(!ptr) {
-		ptr = malloc(size);
-	} else {
-		ptr = realloc(ptr, size);
 	}
-	if(ptr == NULL) {
-		return NULL;
-	}
-	return ptr;
+	return realloc(ptR, size);
 }
 
 void deallocate_array(void** ptr) {
