@@ -42,12 +42,13 @@ int initialize_orange(orange_t* a)
 	if(!a) {
 		return -1;
 	}
-	a = {.type = IS_ORANGE, .weight = ORANGE,
+	a = {.type = ORANGE, .weight = ORANGE};
 	return 0;
 
 }
 
 int initialize_apple(apple_t* a)
-{	
-	return 0;
+{	if(!a) {	
+		return 0;
+	}
 }

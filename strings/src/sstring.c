@@ -5,26 +5,16 @@
 
 #include "../include/sstring.h"
 
-
-// Verifies if the passed character array is a null terminated or not.
-// \param str the character array that may be null terminated
-// \param length to prevent buffer overflow while checking the 
-// \return true if the character array is a string
 bool string_valid(const char *str, const size_t length) {
-	if(!str || length == 0) {
+	if(!str || length == 0) { //If string is null or length equals zero
 		return false;
 	}
-	if(str[length - 1] == '\0') {
+	if(str[length - 1] == '\0') { //End is a null terminator
 		return true;
 	}
-	return false;
+	return false; //End was not a null terminator
 }
-/**
-* Checks if the passed string is null and the length is 
-* greater than 0 then returns a duplicate of the string
-* param str: string to be duplicated
-* param length: length of the string
-*/
+
 char *string_duplicate(const char *str, const size_t length) {
 	if(!str || length == 0) {
 		return NULL; //String is null or length is zero
@@ -32,7 +22,8 @@ char *string_duplicate(const char *str, const size_t length) {
 	return strndup(str, sizeof(char) * length); //Duplicates string using strndup
 }
 
-bool string_equal(const char *str_a, const char *str_b, const size_t length) {	
+bool string_equal(const char *str_a, const char *str_b, const size_t length) {
+/*string a or string b is null, length is zero, memcompare of a and b shows they are not the same*/
 	if(!str_a || !str_b || length == 0 || memcmp(str_a, str_b, length * sizeof(char)) != 0) {
 		return false;
 	}
@@ -41,22 +32,18 @@ bool string_equal(const char *str_a, const char *str_b, const size_t length) {
 	}
 }
 
-// Finds the number of characters in the string, not including the null terminator
-// \param str the string to count the number of characters in the string
-// \param length the max possible string length for the application
-// \return the length of the string or 0 for invalid string 
 int string_length(const char *str, const size_t length) {
-	if(!str || length == 0) {
+	if(!str || length == 0) { //String is null or length is zero
 		return -1;
 	}
-	const char *ptr = str;
+	const char *ptr = str; //Make a temp copy of string into pointer
 	int counter;
-	for(counter = 0; counter < length; counter++, ptr++) {	
+	for(counter = 0; counter < length; counter++, ptr++) { //Searches for the null terminator
 		if(ptr[0] == '\0') {
-			return counter;
+			return counter; //End was found, return length
 		}
 	}
-	return 0;
+	return 0; //No null terminator
 }
 
 // Split the incoming string to tokens that are stored in a passed allocated tokens string array
@@ -76,13 +63,13 @@ int string_tokenize(const char *str, const char *delims, const size_t str_length
 
 bool string_to_int(const char *str, int *converted_value) {
 	errno = 0;
-	if(!str || !converted_value || sizeof(str) >= 10) {
+	if(!str || !converted_value || sizeof(str) >= 10) { //String is null, converted value is null, string is too long
 		return false;
 	}
 	char* end;
-	*converted_value = strtol(str, &end, 10);
-	if(errno == ERANGE) {
-		*converted_value = 0;
+	*converted_value = strtol(str, &end, 10); //String to long
+	if(errno == ERANGE) { //String is too long
+		*converted_value = 0; //Converted value is zero
 		return false;
 	}
 	else {

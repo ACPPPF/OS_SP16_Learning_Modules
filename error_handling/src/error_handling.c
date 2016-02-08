@@ -21,11 +21,12 @@ int create_blank_records(Record_t **records, const size_t num_records) {
 }
 
 int read_records(const char *input_filename, Record_t *records, const size_t num_records) {
+	errno = 0;
 	if(!input_filename || !records || num_records == 0) { //Return -1 if the filename is null, records is null, or size is 0
 		return -1;
 	}
 	int fd = open(input_filename, O_RDONLY); //Opens the file
-	if(fd == -1) { //File does not exist or opening it failed
+	if(errno == ENOENT) { //File does not exist or opening it failed
 		return -2;
 	}
   	ssize_t data_read = 0;
@@ -47,15 +48,17 @@ int read_records(const char *input_filename, Record_t *records, const size_t num
 }
 
 int create_record(Record_t **new_record, const char* name, int age) {
+/*new_record is null, The pointer to new_record contains data already, name is null, 
+* name is a null terminator or new line, length of name is greater than max length,
+* age is not between 0 and 200*/
 	if(!new_record || (*new_record) || !name || name[0] == '\0' || name[0] == '\n' || strlen(name) > MAX_NAME_LEN || age <= 0 || age > 200) {
 		return -1;
 	}
 
-	*new_record = (Record_t*) malloc(sizeof(Record_t));
+	*new_record = (Record_t*) malloc(sizeof(Record_t)); //Allocates memory to the new_record
 	
-	memcpy((*new_record)->name,name,sizeof(char) * strlen(name));
-	(*new_record)->name[MAX_NAME_LEN - 1] = 0;	
-	(*new_record)->age = age;
+	memcpy((*new_record)->name,name,sizeof(char) * strlen(name)); //Copy the name into the new record
+	(*new_record)->name[MAX_NAME_LEN - 1] = 0; //Sets the end of the name as a null terminator
+	(*new_record)->age = age; //Sets the new record age as age
 	return 0;
-
 }

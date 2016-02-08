@@ -12,43 +12,34 @@
 // GOOGLE FOR ENDIANESS HELP
 
 bool bulk_read(const char *input_filename, void *dst, const size_t offset, const size_t dst_size) {	
-	if(!input_filename || !dst || dst_size == 0) {
+	errno = 0; //sets errno to zero
+	if(!input_filename || !dst || dst_size == 0) { //file is null, dest is null, or destination has no size
 		return false;
 	}
-	int file_desc = open(input_filename, O_RDONLY);
-	if(!file_desc) {
-		close(file_desc);
+	int file_desc = open(input_filename, O_RDONLY); //Opens file for read only
+	if(errno == ENOENT || errno == EBADF) { //Couldn't open file 
 		return false;
 	}
-	if(lseek(file_desc, offset, 0) >= 0) {
-		read(file_desc, dst, dst_size * sizeof(char));
-		close(file_desc);
-		return true;
-	}
-	else {
-		close(file_desc);
-		return false;
-	}
+	lseek(file_desc, offset, 0); //Sets the offset of the file
+	read(file_desc, dst, dst_size * sizeof(char)); //reads from the open file into the destination
+	close(file_desc); //closes the file
+	return true;
 }
 
 bool bulk_write(const void *src, const char *output_filename, const size_t offset, const size_t src_size) {
-	if(!src || !output_filename || src_size == 0) {
+	errno = 0; //Sets errno to zero 
+	if(!src || !output_filename || src_size == 0) { //file is null, source is null, or source has no size
+
 		return false;
 	}
-	int file_desc = open(output_filename, O_WRONLY);
-	if(!file_desc) {
-		close(file_desc);
+	int file_desc = open(output_filename, O_WRONLY); //Opens file for write only
+	if(errno == ENOENT || errno == EBADF) { //File does not exist
 		return false;
 	}
-	if(lseek(file_desc, offset, 0) >= 0) {
-                write(file_desc, src, src_size * sizeof(char));
-                close(file_desc);                
-		return true;
-        }
-        else {
-                close(file_desc);
-                return false;
-        }
+	lseek(file_desc, offset, 0); //Sets the offset
+	write(file_desc, src, src_size * sizeof(char)); //Writes to the source from the open file
+   	close(file_desc); //Close file
+    	return true;
 }
 
 // Returns the file metadata given a filename   
@@ -56,16 +47,16 @@ bool bulk_write(const void *src, const char *output_filename, const size_t offse
 // \param metadata the buffer that contains the metadata of the queried filename
 // return true if operation was successful, else false
 bool file_stat(const char *query_filename, struct stat *metadata) {
-	if(!query_filename || !metadata) {
+	errno = 0; //Set errno to zero
+	if(!query_filename || !metadata) { //Filename is null or metadata is null
 		return false;
 	}
-	int file_desc = open(query_filename, O_RDONLY);
-	if(file_desc <= 0) {
-		close(file_desc);
+	int file_desc = open(query_filename, O_RDONLY); //Opens file for readonly
+	if(errno == ENOENT) { //File does not exist
 		return false;
 	} else {
-		fstat(file_desc, metadata);
-		close(file_desc);
+		fstat(file_desc, metadata); //Gets stat data from open file
+		close(file_desc); //Closes file
 		return true;
 	}	
 }
@@ -77,7 +68,7 @@ bool file_stat(const char *query_filename, struct stat *metadata) {
 // \param src_count the number of src_data elements
 // \return true if successful, else false for failure
 bool endianess_converter(uint32_t *src_data, uint32_t *dst_data, const size_t src_count) {
-	if(!src_data || !dst_data || src_count == 0) {
+	if(!src_data || !dst_data || src_count == 0) { //Source data is null, destination data is null, or source count is zero
 		return false;
 	}
 	int counter;
